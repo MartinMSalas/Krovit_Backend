@@ -140,7 +140,14 @@ class ProjectServiceImpMySQLTest {
     }
 
     @Test
-    void deleteProject() {
+    void test_deleteProject_existingId_returnsVoid() {
+        // Arrange
+        Long id = 1L;
+
+        // Act
+        projectService.deleteProject(id);
+
+        // Assert
     }
 
     @Test
