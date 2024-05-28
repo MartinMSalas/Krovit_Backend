@@ -10,6 +10,7 @@ import com.krovit.api.dto.response.TechnologyResponseDto;
 import com.krovit.api.entity.Project;
 import com.krovit.api.entity.Technology;
 import com.krovit.api.mapper.ProjectMapper;
+import com.krovit.api.mapper.TechnologyMapper;
 import com.krovit.api.repository.ProjectRepository;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -34,6 +35,8 @@ class ProjectServiceImpMySQLTest {
 
     @Mock
     private ProjectMapper projectMapper;
+    @Mock
+    private TechnologyMapper technologyMapper;
 
     @InjectMocks
     private ProjectServiceImpMySQL projectService;
@@ -70,6 +73,7 @@ class ProjectServiceImpMySQLTest {
         project = Project.builder()
                 .projectId(1L)
                 .projectName("Project")
+                .certifiedTechnology(technology)
                 .projectDescription("Project Description")
                 .build();
         projectRequestDto = ProjectRequestDto.builder()
@@ -151,7 +155,23 @@ class ProjectServiceImpMySQLTest {
     }
 
     @Test
-    void addTechnologyToProject() {
+    void test_addTechnologyToProject_validInput_returnsProjectResponseDto() {
+        // Arrange
+        Long projectId = 1L;
+        when(projectMapper.projectToProjectResponseDto(project)).thenReturn(projectResponseDto);
+        when(technologyMapper.technologyRequestDtoToTechnology(requestDto)).thenReturn(technology);
+        when(projectRepository.findById(projectId)).thenReturn(Optional.of(project));
+
+        when(projectRepository.findById(projectId)).thenReturn(Optional.of(project));
+        when(projectRepository.save(any(Project.class))).thenReturn(project);
+
+        // Act
+        Optional<ProjectResponseDto> projectResponseDtoCall = projectService.addTechnologyToProject(projectId, requestDto);
+
+
+        // Assert
+        assertTrue(projectResponseDtoCall.isPresent());
+        assertEquals(projectResponseDto, projectResponseDtoCall.get());
     }
 
     @Test
