@@ -166,6 +166,15 @@ public class ProjectServiceImpMySQL implements ProjectService{
 
     @Override
     public Set<TechnologyResponseDto> getTechnologiesForProject(Long projectId) {
-        return Set.of();
+        if (projectId == null) {
+            throw new IllegalArgumentException("ProjectId cannot be null");
+        }
+        Optional<Project> project = projectRepository.findById(projectId);
+        if (project.isPresent()) {
+            return project.get().getCertifiedTechnologies().stream().map(technologyMapper::technologyToTechnologyResponseDto).collect(Collectors.toSet());
+        }else{
+            throw new IllegalArgumentException("Project not found");
+        }
+
     }
 }

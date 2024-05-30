@@ -205,7 +205,7 @@ class ProjectServiceImpMySQLTest {
         Long projectId = 1L;
 
         when(projectRepository.findById(projectId)).thenReturn(Optional.of(project));
-        when(projectMapper.projectToProjectResponseDto(project)).thenReturn(projectResponseDto);
+
 
         // Act
         Set<TechnologyResponseDto> result = projectService.getTechnologiesForProject(projectId);
