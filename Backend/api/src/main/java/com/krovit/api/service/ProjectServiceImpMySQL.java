@@ -134,7 +134,33 @@ public class ProjectServiceImpMySQL implements ProjectService{
     }
 
     @Override
-    public void removeTechnologyFromProject(Long projectId, Long technologyId) {
+    public Optional<ProjectResponseDto> removeTechnologyFromProject(Long projectId, Long technologyId) {
+        if (projectId == null) {
+            throw new IllegalArgumentException("ProjectId cannot be null");
+        }
+        if (technologyId == null) {
+            throw new IllegalArgumentException("TechnologyId cannot be null");
+        }
+        Optional<Project> project = projectRepository.findById(projectId);
+        if (project.isPresent()) {
+//            Set<Technology> certifiedTechnologies = new HashSet<>(project.get().getCertifiedTechnologies());
+//            certifiedTechnologies.removeIf(technology -> technology.getTechnologyId().equals(technologyId));
+//            project.get().setCertifiedTechnologies(certifiedTechnologies);
+
+
+            // another way to do it
+            Set<Technology> certifiedTechnologiesStream = project.get().getCertifiedTechnologies().stream().filter(technology -> !technology.getTechnologyId().equals(technologyId)).collect(Collectors.toSet());
+            project.get().setCertifiedTechnologies(certifiedTechnologiesStream);
+
+            Project projectSaved = projectRepository.save(project.get());
+            ProjectResponseDto projectResponseDtoSaved = projectMapper.projectToProjectResponseDto(projectSaved);
+            return Optional.of(projectResponseDtoSaved);
+
+        } else {
+            throw new IllegalArgumentException("Project not found");
+        }
+
+
 
     }
 

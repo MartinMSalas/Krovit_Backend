@@ -24,7 +24,7 @@ public interface ProjectService {
 
         Optional<ProjectResponseDto> addTechnologyToProject(Long projectId, TechnologyRequestDto technologyRequestDto);
 
-        void removeTechnologyFromProject(Long projectId, Long technologyId);
+        Optional<ProjectResponseDto> removeTechnologyFromProject(Long projectId, Long technologyId);
 
         Set<TechnologyResponseDto> getTechnologiesForProject(Long projectId);
 }

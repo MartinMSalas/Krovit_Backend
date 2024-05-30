@@ -20,7 +20,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 import static org.mockito.ArgumentMatchers.any;
 
@@ -152,6 +154,7 @@ class ProjectServiceImpMySQLTest {
         projectService.deleteProject(id);
 
         // Assert
+
     }
 
     @Test
@@ -176,9 +179,39 @@ class ProjectServiceImpMySQLTest {
 
     @Test
     void removeTechnologyFromProject() {
+        // Arrange
+        Long projectId = 1L;
+        Long technologyId = 1L;
+        Project projectNoTech = project.toBuilder().build();
+        projectNoTech.setCertifiedTechnologies(new HashSet<>());
+        when(projectRepository.findById(projectId)).thenReturn(Optional.of(project));
+        when(projectRepository.save(any(Project.class))).thenReturn(projectNoTech);
+
+        when(projectMapper.projectToProjectResponseDto(project)).thenReturn(projectResponseDto);
+
+        // Act
+        Optional<ProjectResponseDto> projectResponseDtoCall = projectService.removeTechnologyFromProject(projectId, technologyId);
+
+        assertTrue(projectResponseDtoCall.isPresent());
+        assertEquals(projectResponseDto, projectResponseDtoCall.get());
+
+
+
     }
 
     @Test
     void getTechnologiesForProject() {
+        // Arrange
+        Long projectId = 1L;
+        when(projectRepository.findById(projectId)).thenReturn(Optional.of(project));
+        when(projectMapper.projectToProjectResponseDto(project)).thenReturn(projectResponseDto);
+
+        // Act
+        Set<TechnologyResponseDto> result = projectService.getTechnologiesForProject(projectId);
+
+        // Assert
+
+        assertEquals(1, result.size());
+
     }
 }
