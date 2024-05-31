@@ -27,8 +27,5 @@ public class ProjectRequestDto {
     private String sourceCodeLink;
 
     private Set<TechnologyRequestDto> certifiedTechnologiesDto;
-    private float projectVersion;
 
-    private LocalDateTime createdDate;
-    private LocalDateTime updateDate;
 }

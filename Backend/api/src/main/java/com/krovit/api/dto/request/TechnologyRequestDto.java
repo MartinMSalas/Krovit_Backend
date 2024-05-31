@@ -23,6 +23,5 @@ public class TechnologyRequestDto {
     @Size(max=255 , message = "Description must be less than or equal to 255 characters")
     private String description;
     private String tag;
-    private LocalDateTime createdDate;
-    private LocalDateTime updateDate;
+
 }

@@ -1,11 +1,10 @@
 package com.krovit.api.service;
 
 import com.krovit.api.dto.request.TechnologyRequestDto;
-import com.krovit.api.entity.Technology;
+
 import com.krovit.api.dto.response.TechnologyResponseDto;
 import org.springframework.data.domain.Page;
 
-import java.util.List;
 import java.util.Optional;
 
 public interface TechnologyService {
