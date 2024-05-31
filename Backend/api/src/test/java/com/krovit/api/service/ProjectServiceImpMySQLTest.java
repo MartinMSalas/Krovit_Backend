@@ -25,9 +25,10 @@ import java.util.Optional;
 import java.util.Set;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
 
 //import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
+
 
 @ExtendWith(MockitoExtension.class)
 class ProjectServiceImpMySQLTest {
@@ -154,7 +155,7 @@ class ProjectServiceImpMySQLTest {
         projectService.deleteProject(id);
 
         // Assert
-
+        verify(projectRepository, times(1)).deleteById(id);
     }
 
     @Test
