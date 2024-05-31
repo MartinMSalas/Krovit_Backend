@@ -128,12 +128,6 @@ public class TechnologyServiceImpMySQL implements TechnologyService{
             if (technologyRequestDto.getTag() != null) {
                 technology.get().setTag(technologyRequestDto.getTag());
             }
-            if (technologyRequestDto.getCreatedDate() != null) {
-                technology.get().setCreatedDate(technologyRequestDto.getCreatedDate());
-            }
-            if (technologyRequestDto.getUpdateDate() != null) {
-                technology.get().setUpdateDate(technologyRequestDto.getUpdateDate());
-            }
 
             technology.get().setTechnologyId(id);
             Technology updatedTechnology = technologyRepository.save(technology.get());
